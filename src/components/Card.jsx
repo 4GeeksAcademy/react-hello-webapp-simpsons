@@ -14,40 +14,25 @@ export const Card = ({ character }) => {
         }
     };
     
-    // Construir URL de imagen
-    const imageUrl = character.image_path 
-        ? `https://cdn.thesimpsonsapi.com/300/${character.image_path}`
-        : "https://via.placeholder.com/300x400?text=Sin+imagen";
+    const imageUrl = `https://cdn.thesimpsonsapi.com/500/character/${character.id}.webp`
+    const occupation = character.occupation || "Ocupación desconocida";
+    const age = character.age ? `${character.age} años` : "Edad desconocida";
     
     return (
         <div className="card h-100 shadow-sm">
-            <img 
-                src={imageUrl} 
-                className="card-img-top" 
-                alt={character.name}
-                style={{ height: "250px", objectFit: "cover" }}
-                onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/300x400?text=Error+de+imagen";
-                }}
-            />
+            <img src={imageUrl} className="card-img-top" alt={character.name}style={{ height: "200px", objectFit: "cover" }}/>
             <div className="card-body">
-                <h5 className="card-title">{character.name}</h5>
-                {character.description && (
-                    <p className="card-text text-muted small">
-                        {character.description.substring(0, 80)}...
-                    </p>
-                )}
+                <h5 className="card-title mb-3">{character.name}</h5>
+                <p className="card-text mb-1"><strong>Ocupación:</strong> {occupation}</p>
+                <p className="card-text mb-2"><strong>Edad:</strong> {age}</p>
             </div>
             <div className="card-footer bg-transparent d-flex justify-content-between">
                 <Link to={`/character/${character.id}`} className="btn btn-primary btn-sm">
-                    Ver detalles
+                    expandir
                 </Link>
-                <button 
-                    onClick={handleFavorite}
-                    className={`btn btn-sm ${isFavorite ? 'btn-danger' : 'btn-outline-danger'}`}
-                >
+                <button onClick={handleFavorite}
+                    className={`btn btn-sm ${isFavorite ? 'btn-danger' : 'btn-outline-danger'}`}>
                     <i className={`fas fa-heart ${isFavorite ? '' : 'far'}`}></i>
-                    {isFavorite ? ' Quitar' : ' Favorito'}
                 </button>
             </div>
         </div>
